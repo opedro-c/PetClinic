@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PetClinic</string>
+    <string name="manage_pets">Manage Pets</string>
+    <string name="manage_appointments">Manage Appointments</string>
 </resources>
