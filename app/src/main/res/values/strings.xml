@@ -2,4 +2,6 @@
     <string name="app_name">PetClinic</string>
     <string name="manage_pets">Manage Pets</string>
     <string name="manage_appointments">Manage Appointments</string>
+    <string name="register_pet">Register Pet</string>
+    <string name="register_appointments">Register Appointment</string>
 </resources>
