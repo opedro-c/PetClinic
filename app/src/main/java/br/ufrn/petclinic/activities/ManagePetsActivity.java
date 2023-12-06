@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,11 @@ public class ManagePetsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_pets);
 
+        Button registerPet = findViewById(R.id.register);
+        Button deletePet = findViewById(R.id.delete);
+        registerPet.setOnClickListener(view -> startActivity(new Intent(this, RegisterPetActivity.class)));
+        deletePet.setOnClickListener(view -> startActivity(new Intent(this, DeletePetActivity.class)));
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -32,6 +39,6 @@ public class ManagePetsActivity extends AppCompatActivity {
     }
 
     private void createPets() {
-        pets.add((new Pet("Bob", "01/01/2001", "drawable://img.png")));
+        pets.add((new Pet("the bob", "Bob", "01/01/2001", "drawable://img.png")));
     }
 }
