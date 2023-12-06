@@ -1,5 +1,11 @@
 package br.ufrn.petclinic.activities;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,31 +13,35 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.PickVisualMediaRequest;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia;
-
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 import br.ufrn.petclinic.R;
 import br.ufrn.petclinic.models.Pet;
 
-public class RegisterPetActivity extends AppCompatActivity {
+public class EditPetActivity extends AppCompatActivity {
 
-    Pet pet;
+    private String id;
+    private TextView nameField;
+    private TextView appointmentDateField;
     private TextView path;
+    private Pet pet;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_pet);
+        setContentView(R.layout.activity_edit_pet);
 
-        pet = new Pet();
+        Bundle extras = getIntent().getExtras();
+
+        nameField = findViewById(R.id.pet_name);
+        appointmentDateField = findViewById(R.id.pet_appointment_date);
+
+        id = extras.getString("id");
+        nameField.setText(extras.getString("name"));
+        appointmentDateField.setText(extras.getString("appointmentDate"));
         path = findViewById(R.id.path);
+        pet = new Pet();
 
         ActivityResultLauncher<PickVisualMediaRequest> pickMedia = preparePickMedia();
 
@@ -40,11 +50,10 @@ public class RegisterPetActivity extends AppCompatActivity {
         Button selectPetPicture = findViewById(R.id.select_pet_picture);
         selectPetPicture.setOnClickListener(view -> pickMedia.launch(pickMediaRequest));
 
-        Button registerPet = findViewById(R.id.register_pet);
-        registerPet.setOnClickListener(view -> {
-            String id = ((TextView) findViewById(R.id.id)).getText().toString();
-            String name = ((TextView) findViewById(R.id.pet_name)).getText().toString();
-            String appointmentDate = ((TextView) findViewById(R.id.pet_appointment_date)).getText().toString();
+        Button editPet = findViewById(R.id.edit_pet);
+        editPet.setOnClickListener(view -> {
+            String name = nameField.getText().toString();
+            String appointmentDate = appointmentDateField.getText().toString();
             String picturePath = path.getText().toString();
 
             if (Stream.of(id, name, appointmentDate, picturePath).anyMatch(str -> str == null || str.isEmpty())) {
@@ -62,16 +71,17 @@ public class RegisterPetActivity extends AppCompatActivity {
         });
     }
 
+
     @NonNull
     private static PickVisualMediaRequest preparePickMediaRequest() {
         return new PickVisualMediaRequest.Builder()
-                .setMediaType((PickVisualMedia.VisualMediaType) PickVisualMedia.ImageOnly.INSTANCE)
+                .setMediaType((ActivityResultContracts.PickVisualMedia.VisualMediaType) ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                 .build();
     }
 
     @NonNull
     private ActivityResultLauncher<PickVisualMediaRequest> preparePickMedia() {
-        return registerForActivityResult(new PickVisualMedia(), uri -> {
+        return registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
             // Callback is invoked after the user selects a media item or closes the
             // photo picker.
             if (uri != null) {

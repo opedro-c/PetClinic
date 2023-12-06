@@ -9,4 +9,5 @@
     <string name="select_pet_picture">Select pet picture</string>
     <string name="appointment_date">Appointment Date</string>
     <string name="delete_pet">Delete Pet</string>
+    <string name="edit_pet">Edit Pet</string>
 </resources>
