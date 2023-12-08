@@ -10,4 +10,6 @@
     <string name="appointment_date">Appointment Date</string>
     <string name="delete_pet">Delete Pet</string>
     <string name="edit_pet">Edit Pet</string>
+    <string name="welcome">Welcome!</string>
+    <string name="start_menu_instruction">Touch the paw to proceed...</string>
 </resources>

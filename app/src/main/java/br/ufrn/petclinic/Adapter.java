@@ -1,6 +1,9 @@
 package br.ufrn.petclinic;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 
 import br.ufrn.petclinic.activities.EditPetActivity;
@@ -35,7 +40,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         Pet pet = pets.get(position);
         holder.name.setText(pet.getName());
         holder.appointmentDate.setText(pet.getAppointmentDate());
-        holder.picture.setImageResource(R.drawable.img);
+        Uri imageURI = Uri.parse(pet.getPicturePath());
+        holder.picture.setImageURI(imageURI);
+
         holder.id = pet.getId();
     }
 

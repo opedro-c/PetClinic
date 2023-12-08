@@ -1,7 +1,11 @@
 package br.ufrn.petclinic.activities;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,9 +18,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
+import br.ufrn.petclinic.PetsSingleton;
 import br.ufrn.petclinic.R;
 import br.ufrn.petclinic.models.Pet;
 
@@ -56,6 +62,8 @@ public class RegisterPetActivity extends AppCompatActivity {
             pet.setAppointmentDate(appointmentDate);
             pet.setId(id);
             pet.setPicturePath(picturePath);
+
+            PetsSingleton.getInstance().pets.add(pet);
 
             Toast.makeText(this, "Pet registered successfully!", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, ManagePetsActivity.class));

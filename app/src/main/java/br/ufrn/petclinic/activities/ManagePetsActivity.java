@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufrn.petclinic.Adapter;
+import br.ufrn.petclinic.PetsSingleton;
 import br.ufrn.petclinic.R;
 import br.ufrn.petclinic.models.Pet;
 
@@ -39,6 +40,7 @@ public class ManagePetsActivity extends AppCompatActivity {
     }
 
     private void createPets() {
-        pets.add((new Pet("the bob", "Bob", "01/01/2001", "drawable://img.png")));
+//        pets.add((new Pet("the bob", "Bob", "01/01/2001", null)));
+        pets.addAll(PetsSingleton.getInstance().pets);
     }
 }
