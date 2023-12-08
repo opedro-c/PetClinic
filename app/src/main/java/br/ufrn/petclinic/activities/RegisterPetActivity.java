@@ -7,7 +7,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,8 +55,10 @@ public class RegisterPetActivity extends AppCompatActivity {
             String name = ((TextView) findViewById(R.id.pet_name)).getText().toString();
             String appointmentDate = ((TextView) findViewById(R.id.pet_appointment_date)).getText().toString();
             String picturePath = path.getText().toString();
+            RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+            int checkedRadio = radioGroup.getCheckedRadioButtonId();
 
-            if (Stream.of(id, name, appointmentDate, picturePath).anyMatch(str -> str == null || str.isEmpty())) {
+            if (Stream.of(id, name, appointmentDate, picturePath).anyMatch(str -> str == null || str.isEmpty()) && checkedRadio == -1) {
                 Toast.makeText(this, "Please, fill up all the fields!", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -68,6 +73,23 @@ public class RegisterPetActivity extends AppCompatActivity {
             Toast.makeText(this, "Pet registered successfully!", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, ManagePetsActivity.class));
         });
+    }
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        int id = view.getId();
+        if (id == R.id.dog) {
+            if (checked) {
+                pet.setType("dog");
+            }
+        } else if (id == R.id.cat) {
+            if (checked) {
+                pet.setType("cat");
+            }
+        }
     }
 
     @NonNull

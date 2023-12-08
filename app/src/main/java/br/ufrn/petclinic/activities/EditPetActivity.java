@@ -9,7 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ public class EditPetActivity extends AppCompatActivity {
     private String id;
     private TextView nameField;
     private TextView appointmentDateField;
+    private RadioGroup radioGroup;
     private TextView path;
     private Pet pet;
 
@@ -34,13 +38,10 @@ public class EditPetActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
 
-        nameField = findViewById(R.id.pet_name);
-        appointmentDateField = findViewById(R.id.pet_appointment_date);
+        getFields();
 
-        id = extras.getString("id");
-        nameField.setText(extras.getString("name"));
-        appointmentDateField.setText(extras.getString("appointmentDate"));
-        path = findViewById(R.id.path);
+        loadFields(extras);
+
         pet = new Pet();
 
         ActivityResultLauncher<PickVisualMediaRequest> pickMedia = preparePickMedia();
@@ -56,7 +57,10 @@ public class EditPetActivity extends AppCompatActivity {
             String appointmentDate = appointmentDateField.getText().toString();
             String picturePath = path.getText().toString();
 
-            if (Stream.of(id, name, appointmentDate, picturePath).anyMatch(str -> str == null || str.isEmpty())) {
+            RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+            int checkedRadio = radioGroup.getCheckedRadioButtonId();
+
+            if (Stream.of(id, name, appointmentDate, picturePath).anyMatch(str -> str == null || str.isEmpty()) && checkedRadio == -1) {
                 Toast.makeText(this, "Please, fill up all the fields!", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -71,6 +75,42 @@ public class EditPetActivity extends AppCompatActivity {
         });
     }
 
+    private void getFields() {
+        nameField = findViewById(R.id.pet_name);
+        appointmentDateField = findViewById(R.id.pet_appointment_date);
+        radioGroup = findViewById(R.id.radioGroup);
+    }
+
+    private void loadFields(Bundle extras) {
+        id = extras.getString("id");
+        nameField.setText(extras.getString("name"));
+        appointmentDateField.setText(extras.getString("appointmentDate"));
+        switch (extras.getString("type")) {
+            case "dog":
+                radioGroup.check(R.id.dog);
+                break;
+            case "cat":
+                radioGroup.check(R.id.cat);
+        }
+        path = findViewById(R.id.path);
+    }
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        int viewId = view.getId();
+        if (viewId == R.id.dog) {
+            if (checked) {
+                pet.setType("dog");
+            }
+        } else if (viewId == R.id.cat) {
+            if (checked) {
+                pet.setType("cat");
+            }
+        }
+    }
 
     @NonNull
     private static PickVisualMediaRequest preparePickMediaRequest() {

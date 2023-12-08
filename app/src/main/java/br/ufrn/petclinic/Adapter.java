@@ -39,10 +39,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Pet pet = pets.get(position);
         holder.name.setText(pet.getName());
+        holder.type = pet.getType();
         holder.appointmentDate.setText(pet.getAppointmentDate());
         Uri imageURI = Uri.parse(pet.getPicturePath());
         holder.picture.setImageURI(imageURI);
-
         holder.id = pet.getId();
     }
 
@@ -55,6 +55,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
         private String id;
         private TextView name;
+
+        private String type;
         private TextView appointmentDate;
         private ImageView picture;
 
@@ -69,6 +71,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
                 Intent intent = new Intent(itemView.getContext(), EditPetActivity.class);
                 intent.putExtra("id", id);
                 intent.putExtra("name", name.getText().toString());
+                intent.putExtra("type", type);
                 intent.putExtra("appointmentDate", appointmentDate.getText().toString());
                 itemView.getContext().startActivity(intent);
             });
