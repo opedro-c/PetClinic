@@ -15,11 +15,11 @@ import br.ufrn.petclinic.Adapter;
 import br.ufrn.petclinic.PetsSingleton;
 import br.ufrn.petclinic.R;
 import br.ufrn.petclinic.models.Pet;
+import br.ufrn.petclinic.repositories.PetRepository;
 
 public class ManagePetsActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private List<Pet> pets = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +34,9 @@ public class ManagePetsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        createPets();
+        PetRepository petRepository = new PetRepository(getApplicationContext());
+        List<Pet> pets = petRepository.getAllPets();
 
         recyclerView.setAdapter(new Adapter(pets));
-    }
-
-    private void createPets() {
-//        pets.add((new Pet("the bob", "Bob", "01/01/2001", null)));
-        pets.addAll(PetsSingleton.getInstance().pets);
     }
 }

@@ -20,6 +20,7 @@ import java.util.stream.Stream;
 
 import br.ufrn.petclinic.R;
 import br.ufrn.petclinic.models.Pet;
+import br.ufrn.petclinic.repositories.PetRepository;
 
 public class EditPetActivity extends AppCompatActivity {
 
@@ -69,6 +70,9 @@ public class EditPetActivity extends AppCompatActivity {
             pet.setAppointmentDate(appointmentDate);
             pet.setId(id);
             pet.setPicturePath(picturePath);
+
+            PetRepository petRepository = new PetRepository(getApplicationContext());
+            petRepository.updatePet(pet);
 
             Toast.makeText(this, "Pet registered successfully!", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, ManagePetsActivity.class));
@@ -125,7 +129,7 @@ public class EditPetActivity extends AppCompatActivity {
             // Callback is invoked after the user selects a media item or closes the
             // photo picker.
             if (uri != null) {
-                String petPicturePath = uri.getPath();
+                String petPicturePath = uri.toString();
                 path.setText(petPicturePath);
                 Log.d("PhotoPicker", "Selected URI: " + uri);
             } else {

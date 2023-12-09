@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import br.ufrn.petclinic.R;
+import br.ufrn.petclinic.repositories.PetRepository;
 
 public class DeletePetActivity extends AppCompatActivity {
 
@@ -29,6 +30,8 @@ public class DeletePetActivity extends AppCompatActivity {
                 return;
             }
             // enter delete logic
+            PetRepository petRepository = new PetRepository(getApplicationContext());
+            petRepository.deletePet(id.getText().toString());
             Toast.makeText(this, "Successfully deleted!", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, ManagePetsActivity.class));
         });

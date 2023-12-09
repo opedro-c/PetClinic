@@ -1,5 +1,7 @@
 package br.ufrn.petclinic.models;
 
+import android.net.Uri;
+
 public class Pet {
 
 
@@ -62,4 +64,5 @@ public class Pet {
     public void setPicturePath(String picturePath) {
         this.picturePath = picturePath;
     }
+
 }
