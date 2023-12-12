@@ -48,15 +48,16 @@
         android:id="@+id/register_pet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:layout_marginBottom="64dp"
         android:backgroundTint="@color/primary"
         android:text="@string/register_pet"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/select_pet_picture"
-        app:layout_constraintVertical_bias="0.471" />
+        app:layout_constraintTop_toBottomOf="@+id/select_pet_picture" />
 
     <EditText
         android:id="@+id/pet_appointment_date"
@@ -75,12 +76,12 @@
         android:id="@+id/select_pet_picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="24dp"
         android:backgroundTint="@color/primary"
         android:text="@string/select_pet_picture"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pet_appointment_date" />
 
@@ -88,6 +89,7 @@
         android:id="@+id/path"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/primary"
         app:layout_constraintBottom_toTopOf="@+id/select_pet_picture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

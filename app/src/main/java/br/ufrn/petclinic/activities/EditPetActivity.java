@@ -28,8 +28,9 @@ public class EditPetActivity extends AppCompatActivity {
     private TextView nameField;
     private TextView appointmentDateField;
     private RadioGroup radioGroup;
-    private TextView path;
+    private TextView fileFeedback;
     private Pet pet;
+    private String path;
 
 
     @Override
@@ -56,7 +57,7 @@ public class EditPetActivity extends AppCompatActivity {
         editPet.setOnClickListener(view -> {
             String name = nameField.getText().toString();
             String appointmentDate = appointmentDateField.getText().toString();
-            String picturePath = path.getText().toString();
+            String picturePath = path;
 
             RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
             int checkedRadio = radioGroup.getCheckedRadioButtonId();
@@ -96,7 +97,7 @@ public class EditPetActivity extends AppCompatActivity {
             case "cat":
                 radioGroup.check(R.id.cat);
         }
-        path = findViewById(R.id.path);
+        fileFeedback = findViewById(R.id.path);
     }
 
     public void onRadioButtonClicked(View view) {
@@ -130,7 +131,8 @@ public class EditPetActivity extends AppCompatActivity {
             // photo picker.
             if (uri != null) {
                 String petPicturePath = uri.toString();
-                path.setText(petPicturePath);
+                path = petPicturePath;
+                fileFeedback.setText("Picture loaded!");
                 Log.d("PhotoPicker", "Selected URI: " + uri);
             } else {
                 Log.d("PhotoPicker", "No media selected");

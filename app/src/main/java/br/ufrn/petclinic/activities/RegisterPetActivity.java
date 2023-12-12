@@ -1,14 +1,11 @@
 package br.ufrn.petclinic.activities;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -16,16 +13,12 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.stream.Stream;
 
-import br.ufrn.petclinic.PetsSingleton;
 import br.ufrn.petclinic.R;
 import br.ufrn.petclinic.models.Pet;
 import br.ufrn.petclinic.repositories.PetRepository;
@@ -33,7 +26,8 @@ import br.ufrn.petclinic.repositories.PetRepository;
 public class RegisterPetActivity extends AppCompatActivity {
 
     Pet pet;
-    private TextView path;
+    private TextView fileFeedback;
+    private String path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +35,7 @@ public class RegisterPetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_pet);
 
         pet = new Pet();
-        path = findViewById(R.id.path);
+        fileFeedback = findViewById(R.id.path);
 
         ActivityResultLauncher<PickVisualMediaRequest> pickMedia = preparePickMedia();
 
@@ -55,7 +49,7 @@ public class RegisterPetActivity extends AppCompatActivity {
             String id = ((TextView) findViewById(R.id.id)).getText().toString();
             String name = ((TextView) findViewById(R.id.pet_name)).getText().toString();
             String appointmentDate = ((TextView) findViewById(R.id.pet_appointment_date)).getText().toString();
-            String picturePath = path.getText().toString();
+            String picturePath = path;
             RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
             int checkedRadio = radioGroup.getCheckedRadioButtonId();
 
@@ -108,7 +102,8 @@ public class RegisterPetActivity extends AppCompatActivity {
             // photo picker.
             if (uri != null) {
                 String petPicturePath = uri.toString();
-                path.setText(petPicturePath);
+                path = petPicturePath;
+                fileFeedback.setText("Picture loaded!");
                 Log.d("PhotoPicker", "Selected URI: " + uri);
             } else {
                 Log.d("PhotoPicker", "No media selected");
